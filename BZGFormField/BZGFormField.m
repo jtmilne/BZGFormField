@@ -135,12 +135,7 @@ static NSString * const kValidationAnimationKey = @"validationAnimationKey";
                           animated:NO];
     self.textField.text = @"";
 
-    self.alertView = [[UIAlertView alloc] initWithTitle:@""
-                                                message:@""
-                                               delegate:self
-                                      cancelButtonTitle:@"Ok"
-                                      otherButtonTitles:nil];
-    self.alertView.delegate = self;
+    self.alertText = @"";
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textFieldTextDidChange:)
