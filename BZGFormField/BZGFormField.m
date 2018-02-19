@@ -135,12 +135,7 @@ static NSString * const kValidationAnimationKey = @"validationAnimationKey";
                           animated:NO];
     self.textField.text = @"";
 
-    self.alertView = [[UIAlertView alloc] initWithTitle:@""
-                                                message:@""
-                                               delegate:self
-                                      cancelButtonTitle:@"Ok"
-                                      otherButtonTitles:nil];
-    self.alertView.delegate = self;
+    self.alertText = @"";
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textFieldTextDidChange:)
@@ -354,17 +349,6 @@ replacementString:(NSString *)string
     }
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    [self.textField becomeFirstResponder];
-
-    if ([self.delegate respondsToSelector:@selector(alertView:willDismissWithButtonIndex:)]) {
-        [self.delegate alertView:alertView willDismissWithButtonIndex:buttonIndex];
-    }
-}
-
 #pragma mark - Actions
 
 - (void)leftIndicatorTouchDown
@@ -378,10 +362,15 @@ replacementString:(NSString *)string
     UIColor *color = [self.leftIndicator.backgroundColor colorWithAlphaComponent:1.0];
     self.leftIndicator.backgroundColor = color;
 
-    [self.alertView show];
+    UIAlertAction *alertActionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK button") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.textField becomeFirstResponder];
+    }];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:self.alertText preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:alertActionOk];
+    [alert setPreferredAction:alertActionOk];
+    UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    [vc presentViewController:alert animated:YES completion:nil];
 }
-
-
 
 
 @end
