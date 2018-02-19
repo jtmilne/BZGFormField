@@ -28,7 +28,7 @@ typedef BOOL (^BZGTextValidationBlock)(BZGFormField *field, NSString *text);
 @property (weak, nonatomic) id <BZGFormFieldDelegate> delegate;
 @property (strong, nonatomic) UITextField *textField;
 @property (strong, nonatomic) UIButton *leftIndicator;
-@property (strong, nonatomic) NSString *alertText;
+@property (strong, nonatomic) UIAlertView *alertView;
 
 /// The width of the left indicator when inactive, relative to the height of the form field.
 @property (assign, nonatomic) CGFloat leftIndicatorInactiveWidth;
